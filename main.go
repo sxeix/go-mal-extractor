@@ -44,8 +44,8 @@ type AnimeItem struct {
 	Storage           string        `json:"storage"`
 	Priority          string        `json:"priority"`
 	Added_to_list     bool          `json:"added_to_list"`
-	Studios           []interface{} `json:"studios"`
-	Licensors         []interface{} `json:"licensors"`
+	Studios           []interface{} `json:"studios"`   // TODO: response currently only returns empty array can implement later on
+	Licensors         []interface{} `json:"licensors"` // TODO: response currently only returns empty array can implement later on
 }
 
 func main() {
