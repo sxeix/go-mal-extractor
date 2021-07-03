@@ -70,29 +70,12 @@ func makeRequest(uname string) {
 	if err != nil {
 		log.Fatalln(err)
 	}
-
-	// sb := string(body)
-	// fmt.Println(sb)
-
 	var result Result
 	json.Unmarshal(body, &result)
-
-	// fmt.Println(result.Anime)
 
 	for i, val := range result.Anime {
 		fmt.Printf("%d:  %s\n", i, val.Title)
 	}
-
-	// var animeList []AnimeItem
-
-	// if err := json.Unmarshal([]byte(string(result.Anime)), &animeList); err != nil {
-	// 	panic(err)
-	// }
-
-	// for _, val := range animeList {
-	// 	fmt.Println(val)
-	// }
-
 }
 
 func startMessage(uname string) string {
