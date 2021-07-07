@@ -2,11 +2,11 @@ package main
 
 import (
 	"encoding/json"
+	"flag"
 	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
-	"os"
 )
 
 type Result struct {
@@ -49,10 +49,11 @@ type AnimeItem struct {
 }
 
 func main() {
-	user := os.Args[1]
-	openMessage := startMessage(user)
+	userPtr := flag.String("user", "DEFAULT", "Enter your username")
+	flag.Parse()
+	openMessage := startMessage(*userPtr)
 	fmt.Println(openMessage)
-	makeRequest(user)
+	makeRequest(*userPtr)
 }
 
 func createHttpString(uname string) string {
