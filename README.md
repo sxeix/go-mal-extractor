@@ -11,8 +11,11 @@ On windows if built
 
 ### Flags
 *Mandatory flags*
+
 `-user=YOUR_USERNAME`
+
 *Optional flags*
+
 `-status=STATUS`
 
   **List of status options**
