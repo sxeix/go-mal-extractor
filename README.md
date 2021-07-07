@@ -10,8 +10,9 @@ On windows if built
 `./mal.exe ... `
 
 ### Flags
+*Mandatory flags*
 `-user=YOUR_USERNAME`
-
+*Optional flags*
 `-status=STATUS`
 
   **List of status options**
