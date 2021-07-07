@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 )
 
 type Result struct {
@@ -52,6 +53,7 @@ func main() {
 	userPtr := flag.String("user", "DEFAULT", "Enter your username")
 	statusPtr := flag.String("status", "all", "The status of the anime you wish to search")
 	flag.Parse()
+	validateFlag(*userPtr)
 	openMessage := startMessage(*userPtr)
 	fmt.Println(openMessage)
 	makeRequest(*userPtr, *statusPtr)
@@ -82,4 +84,11 @@ func makeRequest(uname string, status string) {
 
 func startMessage(uname string) string {
 	return "Searching for user " + uname
+}
+
+func validateFlag(user string) {
+	if user == "DEFAULT" {
+		fmt.Printf("Username must be specified, use -user=USERNAME flag\n")
+		os.Exit(2)
+	}
 }
