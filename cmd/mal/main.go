@@ -50,18 +50,19 @@ type AnimeItem struct {
 
 func main() {
 	userPtr := flag.String("user", "DEFAULT", "Enter your username")
+	statusPtr := flag.String("status", "all", "The status of the anime you wish to search")
 	flag.Parse()
 	openMessage := startMessage(*userPtr)
 	fmt.Println(openMessage)
-	makeRequest(*userPtr)
+	makeRequest(*userPtr, *statusPtr)
 }
 
-func createHttpString(uname string) string {
-	return fmt.Sprintf("https://api.jikan.moe/v3/user/%s/animelist", uname)
+func createHttpString(uname string, status string) string {
+	return fmt.Sprintf("https://api.jikan.moe/v3/user/%s/animelist/%s", uname, status)
 }
 
-func makeRequest(uname string) {
-	resp, err := http.Get(createHttpString(uname))
+func makeRequest(uname string, status string) {
+	resp, err := http.Get(createHttpString(uname, status))
 	if err != nil {
 		log.Fatalln(err)
 	}
