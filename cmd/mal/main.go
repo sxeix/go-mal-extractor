@@ -86,7 +86,7 @@ func startMessage(uname string) string {
 	return "Searching for user " + uname
 }
 
-func validateFlag(user string) {
+func validateFlag(user string) { // TODO: validate the status flag is a valid choice
 	if user == "DEFAULT" {
 		fmt.Printf("Username must be specified, use -user=USERNAME flag\n")
 		os.Exit(2)
