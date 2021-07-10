@@ -50,20 +50,26 @@ type AnimeItem struct {
 }
 
 func main() {
+	user, status, score := getFlags()
+	validateFlag(user)
+	startMessage(user)
+	result := makeRequest(user, status)
+	printResult(result, score)
+}
+
+func getFlags() (string, string, bool) {
 	userPtr := flag.String("user", "DEFAULT", "Enter your username")
 	statusPtr := flag.String("status", "all", "The status of the anime you wish to search")
+	scorePtr := flag.Bool("score", false, "The score of each anime ")
 	flag.Parse()
-	validateFlag(*userPtr)
-	openMessage := startMessage(*userPtr)
-	fmt.Println(openMessage)
-	makeRequest(*userPtr, *statusPtr)
+	return *userPtr, *statusPtr, *scorePtr
 }
 
 func createHttpString(uname string, status string) string {
 	return fmt.Sprintf("https://api.jikan.moe/v3/user/%s/animelist/%s", uname, status)
 }
 
-func makeRequest(uname string, status string) {
+func makeRequest(uname string, status string) []AnimeItem {
 	resp, err := http.Get(createHttpString(uname, status))
 	if err != nil {
 		log.Fatalln(err)
@@ -77,13 +83,23 @@ func makeRequest(uname string, status string) {
 	var result Result
 	json.Unmarshal(body, &result)
 
-	for i, val := range result.Anime {
-		fmt.Printf("%d:  %s\n", i, val.Title)
+	return result.Anime
+}
+
+func printResult(anime []AnimeItem, score bool) {
+	if score {
+		for _, val := range anime {
+			fmt.Printf("%d - %s\n", val.Score, val.Title)
+		}
+	} else {
+		for _, val := range anime {
+			fmt.Printf("%s\n", val.Title)
+		}
 	}
 }
 
-func startMessage(uname string) string {
-	return "Searching for user " + uname
+func startMessage(uname string) {
+	fmt.Printf("---------- %s ----------\n", uname)
 }
 
 func validateFlag(user string) { // TODO: validate the status flag is a valid choice
