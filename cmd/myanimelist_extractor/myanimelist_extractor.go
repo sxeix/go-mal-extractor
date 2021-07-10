@@ -50,14 +50,19 @@ type AnimeItem struct {
 }
 
 func main() {
+	user, status, score := getFlags()
+	validateFlag(user)
+	startMessage(user)
+	result := makeRequest(user, status)
+	printResult(result, score)
+}
+
+func getFlags() (string, string, bool) {
 	userPtr := flag.String("user", "DEFAULT", "Enter your username")
 	statusPtr := flag.String("status", "all", "The status of the anime you wish to search")
 	scorePtr := flag.Bool("score", false, "The score of each anime ")
 	flag.Parse()
-	validateFlag(*userPtr)
-	startMessage(*userPtr)
-	result := makeRequest(*userPtr, *statusPtr)
-	printResult(result, *scorePtr)
+	return *userPtr, *statusPtr, *scorePtr
 }
 
 func createHttpString(uname string, status string) string {
