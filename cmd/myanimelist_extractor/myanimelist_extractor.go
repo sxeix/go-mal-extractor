@@ -8,7 +8,14 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"sort"
 )
+
+type ByScore []AnimeItem
+
+func (a ByScore) Len() int           { return len(a) }
+func (a ByScore) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
+func (a ByScore) Less(i, j int) bool { return a[i].Score > a[j].Score }
 
 type Result struct {
 	Request_hash          string      `json:"request_hash"`
@@ -50,19 +57,23 @@ type AnimeItem struct {
 }
 
 func main() {
-	user, status, score := getFlags()
+	user, status, score, sortFlag := getFlags()
 	validateFlag(user)
 	startMessage(user)
 	result := makeRequest(user, status)
+	if sortFlag {
+		sort.Sort(ByScore(result))
+	}
 	printResult(result, score)
 }
 
-func getFlags() (string, string, bool) {
+func getFlags() (string, string, bool, bool) {
 	userPtr := flag.String("user", "DEFAULT", "Enter your username")
 	statusPtr := flag.String("status", "all", "The status of the anime you wish to search")
 	scorePtr := flag.Bool("score", false, "The score of each anime ")
+	sortPtr := flag.Bool("sort", false, "Sort the animelist by score - highest to lowest")
 	flag.Parse()
-	return *userPtr, *statusPtr, *scorePtr
+	return *userPtr, *statusPtr, *scorePtr, *sortPtr
 }
 
 func createHttpString(uname string, status string) string {
