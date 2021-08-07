@@ -1,13 +1,18 @@
 # go-mal-extractor
 
-Golang command line tool to extract a user's [myanimelist](https://myanimelist.net/).
+Golang script to extract a user's [myanimelist](https://myanimelist.net/).
 
-## Usage
-`go run main.go ...`
 
-On windows if built
+### Prerequisites
+[Golang](https://golang.org/)
 
-`./mal.exe ... `
+### Installation
+
+`git clone https://github.com/sxeix/go-mal-extractor.git && cd go-mal-extractor/cmd/myanime && go install`
+
+Then use from terminal with command
+
+`myanime -user=YOUR_USERNAME`
 
 ### Flags
 *Mandatory flags*
@@ -16,6 +21,8 @@ On windows if built
 
 *Optional flags*
 
+`-sort=BOOLEAN `
+`-score=BOOLEAN`
 `-status=STATUS`
 
   **List of status options**
@@ -29,4 +36,4 @@ On windows if built
 
 Run with  `-h` flag for further help
 
-Find reference to the docs for Jikan API which this tool uses [here](https://jikan.docs.apiary.io/)
+Find reference to the docs for Jikan API which this script uses [here](https://jikan.docs.apiary.io/)
