@@ -1,15 +1,14 @@
 # go-mal-extractor
 
-Golang command line tool to extract a user's [myanimelist](https://myanimelist.net/).
+Golang script to extract a user's [myanimelist](https://myanimelist.net/).
 
-## Prerequisites
+
+### Prerequisites
 [Golang](https://golang.org/)
-## Usage
-`go run . -user=YOUR_USERNAME ...`
 
-Install using
+### Installation
 
-`go install`
+`git clone https://github.com/sxeix/go-mal-extractor.git && cd go-mal-extractor/cmd/myanime && go install`
 
 Then use from terminal with command
 
