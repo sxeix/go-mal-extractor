@@ -58,7 +58,7 @@ type AnimeItem struct {
 
 func main() {
 	user, status, score, sortFlag := getFlags()
-	validateFlag(user)
+	validateFlag(user, status)
 	startMessage(user)
 	result := makeRequest(user, status)
 	if sortFlag {
@@ -69,7 +69,8 @@ func main() {
 
 func getFlags() (string, string, bool, bool) {
 	userPtr := flag.String("user", "DEFAULT", "Enter your username")
-	statusPtr := flag.String("status", "all", "The status of the anime you wish to search")
+	statusPtr := flag.String("status", "all", "The status of the anime you wish to search\n"+
+		"Available status options: all,watching,completed,onhold,dropped,plantowatch,ptw\n")
 	scorePtr := flag.Bool("score", false, "The score of each anime ")
 	sortPtr := flag.Bool("sort", false, "Sort the animelist by score - highest to lowest")
 	flag.Parse()
@@ -113,9 +114,25 @@ func startMessage(uname string) {
 	fmt.Printf("---------- %s ----------\n", uname)
 }
 
-func validateFlag(user string) { // TODO: validate the status flag is a valid choice
+func validateFlag(user string, status string) {
 	if user == "DEFAULT" {
 		fmt.Printf("Username must be specified, use -user=USERNAME flag\n")
 		os.Exit(2)
 	}
+
+	validStatus := map[string]bool{
+		"all":         true,
+		"watching":    true,
+		"completed":   true,
+		"onhold":      true,
+		"dropped":     true,
+		"plantowatch": true,
+		"ptw":         true,
+	}
+
+	if !validStatus[status] {
+		fmt.Printf("'%s' is not a valid status, please run with -h flag for help\n", status)
+		os.Exit(2)
+	}
+
 }
