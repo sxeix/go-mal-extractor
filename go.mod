@@ -1,3 +1,3 @@
-module sxeix/myanimelist_extractor
+module sxeix/myanime
 
 go 1.16
